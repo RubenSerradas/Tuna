@@ -12,7 +12,7 @@
 -export([format_error/1]).
 
 %% User code. This is placed here to allow extra attributes.
--file("src/tuna_lexer.xrl", 14).
+-file("src/tuna_lexer.xrl", 16).
 
 -file("/usr/local/Cellar/erlang/21.1.1/lib/erlang/lib/parsetools-2.1.8/include/leexinc.hrl", 14).
 
@@ -306,22 +306,44 @@ adjust_line(T, A, [_|Cs], L) ->
 %% input.
 
 -file("src/tuna_lexer.erl", 307).
-yystate() -> 0.
+yystate() -> 1.
 
+yystate(4, [C|Ics], Line, Tlen, _, _) when C >= 48, C =< 57 ->
+    yystate(4, Ics, Line, Tlen+1, 1, Tlen);
+yystate(4, Ics, Line, Tlen, _, _) ->
+    {1,Tlen,Ics,Line,4};
+yystate(3, [34|Ics], Line, Tlen, Action, Alen) ->
+    yystate(0, Ics, Line, Tlen+1, Action, Alen);
+yystate(3, [C|Ics], Line, Tlen, Action, Alen) when C >= 0, C =< 9 ->
+    yystate(3, Ics, Line, Tlen+1, Action, Alen);
+yystate(3, [C|Ics], Line, Tlen, Action, Alen) when C >= 11, C =< 33 ->
+    yystate(3, Ics, Line, Tlen+1, Action, Alen);
+yystate(3, [C|Ics], Line, Tlen, Action, Alen) when C >= 35 ->
+    yystate(3, Ics, Line, Tlen+1, Action, Alen);
+yystate(3, Ics, Line, Tlen, Action, Alen) ->
+    {Action,Alen,Tlen,Ics,Line,3};
 yystate(2, [46|Ics], Line, Tlen, _, _) ->
-    yystate(1, Ics, Line, Tlen+1, 0, Tlen);
+    yystate(4, Ics, Line, Tlen+1, 0, Tlen);
 yystate(2, [C|Ics], Line, Tlen, _, _) when C >= 48, C =< 57 ->
     yystate(2, Ics, Line, Tlen+1, 0, Tlen);
 yystate(2, Ics, Line, Tlen, _, _) ->
     {0,Tlen,Ics,Line,2};
-yystate(1, [C|Ics], Line, Tlen, _, _) when C >= 48, C =< 57 ->
-    yystate(1, Ics, Line, Tlen+1, 1, Tlen);
-yystate(1, Ics, Line, Tlen, _, _) ->
-    {1,Tlen,Ics,Line,1};
-yystate(0, [C|Ics], Line, Tlen, Action, Alen) when C >= 48, C =< 57 ->
+yystate(1, [34|Ics], Line, Tlen, Action, Alen) ->
+    yystate(3, Ics, Line, Tlen+1, Action, Alen);
+yystate(1, [C|Ics], Line, Tlen, Action, Alen) when C >= 48, C =< 57 ->
     yystate(2, Ics, Line, Tlen+1, Action, Alen);
-yystate(0, Ics, Line, Tlen, Action, Alen) ->
-    {Action,Alen,Tlen,Ics,Line,0};
+yystate(1, Ics, Line, Tlen, Action, Alen) ->
+    {Action,Alen,Tlen,Ics,Line,1};
+yystate(0, [34|Ics], Line, Tlen, _, _) ->
+    yystate(0, Ics, Line, Tlen+1, 2, Tlen);
+yystate(0, [C|Ics], Line, Tlen, _, _) when C >= 0, C =< 9 ->
+    yystate(3, Ics, Line, Tlen+1, 2, Tlen);
+yystate(0, [C|Ics], Line, Tlen, _, _) when C >= 11, C =< 33 ->
+    yystate(3, Ics, Line, Tlen+1, 2, Tlen);
+yystate(0, [C|Ics], Line, Tlen, _, _) when C >= 35 ->
+    yystate(3, Ics, Line, Tlen+1, 2, Tlen);
+yystate(0, Ics, Line, Tlen, _, _) ->
+    {2,Tlen,Ics,Line,0};
 yystate(S, Ics, Line, Tlen, Action, Alen) ->
     {Action,Alen,Tlen,Ics,Line,S}.
 
@@ -335,6 +357,9 @@ yyaction(0, TokenLen, YYtcs, TokenLine) ->
 yyaction(1, TokenLen, YYtcs, TokenLine) ->
     TokenChars = yypre(YYtcs, TokenLen),
     yyaction_1(TokenChars, TokenLine);
+yyaction(2, TokenLen, YYtcs, TokenLine) ->
+    TokenChars = yypre(YYtcs, TokenLen),
+    yyaction_2(TokenChars, TokenLine);
 yyaction(_, _, _, _) -> error.
 
 -compile({inline,yyaction_0/2}).
@@ -346,5 +371,10 @@ yyaction_0(TokenChars, TokenLine) ->
 -file("src/tuna_lexer.xrl", 10).
 yyaction_1(TokenChars, TokenLine) ->
      { token, { float, TokenLine, list_to_float (TokenChars) } } .
+
+-compile({inline,yyaction_2/2}).
+-file("src/tuna_lexer.xrl", 12).
+yyaction_2(TokenChars, TokenLine) ->
+     { token, { string, TokenLine, TokenChars } } .
 
 -file("/usr/local/Cellar/erlang/21.1.1/lib/erlang/lib/parsetools-2.1.8/include/leexinc.hrl", 313).

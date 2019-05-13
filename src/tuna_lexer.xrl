@@ -11,6 +11,7 @@ Rules.
 
 {DIGITS}+\.{DIGITS}* : {token, {float,TokenLine,list_to_float(TokenChars)}}.
 
-\".*\"               : {token, {string, TokenLine, TokenChars}}.
+\"((:""|[^"])*)\"               : {token, {string, TokenLine, TokenChars}}.
+
 
 Erlang code.

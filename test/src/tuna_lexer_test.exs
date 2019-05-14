@@ -72,4 +72,13 @@ defmodule TunaLexer.Test do
       end
     end
   end
+
+  describe "terminations" do
+    test "[" do
+      value = '['
+      assert {:ok, [{:"[", 1}], 1} == :tuna_lexer.string(value)
+    end
+  end
+  
+
 end

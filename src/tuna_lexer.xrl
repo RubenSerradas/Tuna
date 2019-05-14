@@ -3,7 +3,7 @@ Definitions.
 
 DIGITS = [0-9]
 ALPHABET = [A-Za-z]
-ALPHABET_LOWERCASE = [a-z] 
+ALPHABET_LOWERCASE = [a-z]
 
 Rules.
 
@@ -18,5 +18,7 @@ Rules.
 true                                           :  {token, {bool, TokenLine, true}}.
 
 false                                          :  {token, {bool, TokenLine, false}}.
+
+[(),=\[\]]                                     :  {token, {list_to_atom(TokenChars), TokenLine}}.
 
 Erlang code.

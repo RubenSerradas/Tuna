@@ -273,7 +273,7 @@ Numeric expressions are the one who have at least ONE number in them.
 * &
 * | ^
 * < <= => >
-* == === != <=>
+* == != <=>
 * &&
 * ||
 * ::

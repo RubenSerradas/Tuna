@@ -7,11 +7,12 @@ ALPHABET_LOWERCASE = [a-z]
 
 Rules.
 
-{DIGITS}+            : {token,{integer,TokenLine,list_to_integer(TokenChars)}}.
+{DIGITS}+             :  {token,{integer,TokenLine,list_to_integer(TokenChars)}}.
 
-{DIGITS}+\.{DIGITS}* : {token, {float,TokenLine,list_to_float(TokenChars)}}.
+{DIGITS}+\.{DIGITS}+((E|e)(\+|\-)?{DIGITS}+)? : {token,{float,TokenLine,list_to_float(TokenChars)}}.
 
-\"((:""|[^"])*)\"               : {token, {string, TokenLine, TokenChars}}.
+\"((:""|[^"])*)\"     :  {token, {string, TokenLine, TokenChars}}.
 
+\'((:''|[^'])*)\'     :  {token, {string, TokenLine, TokenChars}}.
 
 Erlang code.

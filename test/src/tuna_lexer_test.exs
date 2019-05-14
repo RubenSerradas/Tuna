@@ -22,8 +22,8 @@ defmodule TunaLexer.Test do
       assert {:ok, [{:string, 1, value}], 1} == :tuna_lexer.string('#{value}')
     end
     test "unicode" do
-      value = '"ñame 日本"'
-      assert {:ok, [{:string, 1, value}], 1} == :tuna_lexer.string('#{value}')
+      value = '"ñame 日本\n"'
+      assert {:ok, [{:string, 1, value}], 2} == :tuna_lexer.string('#{value}')
     end
     test "empty" do
       value = '""'

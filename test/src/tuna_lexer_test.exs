@@ -64,4 +64,12 @@ defmodule TunaLexer.Test do
       assert  error_value == :tuna_lexer.string('#{value}')
     end
   end
+
+  describe "booleans" do
+    test "generated" do
+      ptest value: bool() do
+        assert {:ok, [{:bool, 1, value}], 1} == :tuna_lexer.string('#{value}')
+      end
+    end
+  end
 end

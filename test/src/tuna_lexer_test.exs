@@ -74,11 +74,27 @@ defmodule TunaLexer.Test do
   end
 
   describe "terminations" do
-    test "[" do
-      value = '['
-      assert {:ok, [{:"[", 1}], 1} == :tuna_lexer.string(value)
+    test "all" do
+      ['(', ')',',','=','[',']', '}', '!', '%{', '@['] |> Enum.each(fn (value) -> 
+        assert {:ok, [{:"#{value}", 1}], 1} == :tuna_lexer.string(value)
+      end)
     end
   end
-  
+
+  describe "comparison" do
+    test "all" do
+      ['<', '>', '=>', '<=', '==', '<=>'] |> Enum.each(fn (value) -> 
+        assert {:ok, [{:comparator, 1, :"#{value}"}], 1} == :tuna_lexer.string(value)
+      end)
+    end
+  end
+
+  describe "operators" do
+    test "all" do
+      ['/', '*', '%', '+', '-', '**'] |> Enum.each(fn(value) -> 
+        assert {:ok, [{:operator, 1, :"#{value}"}], 1} == :tuna_lexer.string(value)
+      end)
+    end
+  end
 
 end

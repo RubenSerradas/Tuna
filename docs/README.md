@@ -399,9 +399,9 @@ In Tuna you can make anonymous dictionary objects with functions or
 have classes to instantiate objects. For example: 
 
 ```
-  anon = @[ "hello": fn { pr("hello world") },
+  anon = %{ "hello": fn { pr("hello world") },
             "hola": fn {pr("yo hablo espanol")}
-          ]
+          }
   anon["hello"]
   # its gonna call the function.
 

@@ -1,9 +1,13 @@
 Definitions.
 % Examples here https://github.com/relops/leex_yecc_example/tree/master/src
 
-DIGITS = [0-9]
-ALPHABET = [A-Za-z]
-ALPHABET_LOWERCASE = [a-z]
+DIGITS              =  [0-9]
+ALPHABET            =  [A-Za-z]
+ALPHABET_LOWERCASE  =  [a-z]
+COMPARISON          =  (<|>|=>|<=|==|<=>)
+OPERATORS           =  (/|\*|\%|\+|-|\*\*|<<|>>)
+DELIMITERS          =  ([(),=\[\]}!]|\%{|\@\[)
+RESERVED_WORDS      =  (while|for|in|loop|break|continue|pr|attr|class|new|fn)
 
 Rules.
 
@@ -19,6 +23,12 @@ true                                           :  {token, {bool, TokenLine, true
 
 false                                          :  {token, {bool, TokenLine, false}}.
 
-[(),=\[\]]                                     :  {token, {list_to_atom(TokenChars), TokenLine}}.
+{DELIMITERS}                                   :  {token, {list_to_atom(TokenChars), TokenLine}}.
+
+{COMPARISON}                                   :  {token, {comparator,TokenLine,list_to_atom(TokenChars)}}.
+
+{OPERATORS}                                    :  {token, {operator, TokenLine, list_to_atom(TokenChars)}}.
+
+{RESERVED_WORDS}                               :  {token, {list_to_atom(TokenChars), TokenLine}}.
 
 Erlang code.

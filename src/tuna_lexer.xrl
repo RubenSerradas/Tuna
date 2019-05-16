@@ -5,7 +5,7 @@ DIGITS              =  [0-9]
 ALPHABET            =  [A-Za-z]
 ALPHABET_LOWERCASE  =  [a-z]
 COMPARISON          =  (<|>|=>|<=|==|<=>)
-OPERATORS           =  (/|\*|\%|\+|-|\*\*|<<|>>)
+OPERATORS           =  (/|\*|\%|\+|-|\*\*|<<|>>|::)
 DELIMITERS          =  ([(),=\[\]}!]|\%{|\@\[)
 RESERVED_WORDS      =  (while|for|in|loop|break|continue|pr|attr|class|new|fn)
 

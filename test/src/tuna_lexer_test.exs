@@ -91,8 +91,17 @@ defmodule TunaLexer.Test do
 
   describe "operators" do
     test "all" do
-      ['/', '*', '%', '+', '-', '**'] |> Enum.each(fn(value) -> 
+      ['/', '*', '%', '+', '-', '**', '<<', '>>'] |> Enum.each(fn(value) -> 
         assert {:ok, [{:operator, 1, :"#{value}"}], 1} == :tuna_lexer.string(value)
+      end)
+    end
+  end
+
+  describe "reserved words" do
+    test "all" do
+      ['while', 'for', 'in', 'loop', 'break', 'continue', 'pr', 'attr', 'class', 'new', 'fn']
+      |> Enum.each(fn (value) -> 
+          assert {:ok, [{:"#{value}", 1}], 1} == :tuna_lexer.string(value)
       end)
     end
   end

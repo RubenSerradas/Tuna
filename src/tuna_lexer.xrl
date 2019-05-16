@@ -1,5 +1,6 @@
 Definitions.
 % Examples here https://github.com/relops/leex_yecc_example/tree/master/src
+% https://andrealeopardi.com/posts/tokenizing-and-parsing-in-elixir-using-leex-and-yecc/
 
 DIGITS              =  [0-9]
 ALPHABET            =  [A-Za-z]
@@ -8,6 +9,7 @@ COMPARISON          =  (<|>|=>|<=|==|<=>)
 OPERATORS           =  (/|\*|\%|\+|-|\*\*|<<|>>|::)
 DELIMITERS          =  ([(),=\[\]}!]|\%{|\@\[)
 RESERVED_WORDS      =  (while|for|in|loop|break|continue|pr|attr|class|new|fn|if|elsif|else|case)
+WHITESPACE          =  [\s\t\n\r]
 
 Rules.
 
@@ -30,5 +32,7 @@ false                                          :  {token, {bool, TokenLine, fals
 {OPERATORS}                                    :  {token, {operator, TokenLine, list_to_atom(TokenChars)}}.
 
 {RESERVED_WORDS}                               :  {token, {list_to_atom(TokenChars), TokenLine}}.
+
+{WHITESPACE}+                                  :  skip_token.
 
 Erlang code.

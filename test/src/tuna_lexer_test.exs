@@ -99,7 +99,10 @@ defmodule TunaLexer.Test do
 
   describe "reserved words" do
     test "all" do
-      ['while', 'for', 'in', 'loop', 'break', 'continue', 'pr', 'attr', 'class', 'new', 'fn']
+      ['while', 'for', 'in', 'loop', 
+        'break', 'continue', 'pr', 
+        'attr', 'class', 'new', 'fn',
+        'if', 'elsif', 'else', 'case']
       |> Enum.each(fn (value) -> 
           assert {:ok, [{:"#{value}", 1}], 1} == :tuna_lexer.string(value)
       end)

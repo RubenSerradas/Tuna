@@ -7,7 +7,7 @@ ALPHABET_LOWERCASE  =  [a-z]
 COMPARISON          =  (<|>|=>|<=|==|<=>)
 OPERATORS           =  (/|\*|\%|\+|-|\*\*|<<|>>|::)
 DELIMITERS          =  ([(),=\[\]}!]|\%{|\@\[)
-RESERVED_WORDS      =  (while|for|in|loop|break|continue|pr|attr|class|new|fn)
+RESERVED_WORDS      =  (while|for|in|loop|break|continue|pr|attr|class|new|fn|if|elsif|else|case)
 
 Rules.
 

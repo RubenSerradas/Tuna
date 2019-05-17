@@ -61,7 +61,18 @@ defmodule TunaLexer.Test do
     test "error" do
       value = '\''
       error_value = {:error, {1, :tuna_lexer, {:illegal, '\''}}, 1}
-      assert  error_value == :tuna_lexer.string('#{value}')
+      assert error_value == :tuna_lexer.string('#{value}')
+    end
+  end
+
+  describe "variables" do
+    test "generated" do
+      ptest value: string(min: 1) do
+        [scan] = ~r/[A-Za-z_\-]+/ |> Regex.run(value) || [nil]
+        if value && scan == value do
+          assert {:ok, [{:variable_name, 1, '#{value}'}], 1} == :tuna_lexer.string('#{value}')
+        end
+      end
     end
   end
 

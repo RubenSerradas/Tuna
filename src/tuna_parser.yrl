@@ -1,6 +1,6 @@
 Nonterminals list elements element.
 
-Terminals atom '(' ')'.
+Terminals atom float integer '(' ')'.
 
 Rootsymbol list.
 

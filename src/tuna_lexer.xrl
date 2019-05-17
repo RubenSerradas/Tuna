@@ -9,7 +9,8 @@ COMPARISON          =  (<|>|=>|<=|==|<=>)
 OPERATORS           =  (/|\*|\%|\+|-|\*\*|<<|>>|::)
 DELIMITERS          =  ([(),=\[\]}!]|\%{|\@\[)
 RESERVED_WORDS      =  (while|for|in|loop|break|continue|pr|attr|class|new|fn|if|elsif|else|case)
-WHITESPACE          =  [\s\t\n\r]
+WHITESPACE          =  [\s\t\r]
+NEWLINE             =  [\n]
 
 Rules.
 
@@ -32,6 +33,8 @@ false                                          :  {token, {bool, TokenLine, fals
 {OPERATORS}                                    :  {token, {operator, TokenLine, list_to_atom(TokenChars)}}.
 
 {RESERVED_WORDS}                               :  {token, {list_to_atom(TokenChars), TokenLine}}.
+
+{NEWLINE}                                      :  {token, {newline, TokenLine}}.
 
 {WHITESPACE}+                                  :  skip_token.
 

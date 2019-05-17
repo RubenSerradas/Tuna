@@ -109,4 +109,9 @@ defmodule TunaLexer.Test do
     end
   end
 
+  test "newline" do
+    value = '\n'
+    assert {:ok, [{:newline, 1}], 2} == :tuna_lexer.string(value)
+  end
+
 end
